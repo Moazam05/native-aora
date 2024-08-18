@@ -1,7 +1,9 @@
-import { ScrollView, View, Image, Text } from "react-native";
+import { ScrollView, View, Image, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 import { images } from "../constants";
+import CustomButton from "../components/CustomButton";
 
 export default function Page() {
   return (
@@ -43,8 +45,16 @@ export default function Page() {
             Where Creativity meets innovation: embark on a journey of limitless
             exploration of Aora
           </Text>
+
+          <CustomButton
+            title="Continue with Email"
+            handlePress={() => router.push("/sign-in")}
+            containerStyles="w-full mt-7"
+          />
         </View>
       </ScrollView>
+
+      <StatusBar barStyle="light-content" />
     </SafeAreaView>
   );
 }
