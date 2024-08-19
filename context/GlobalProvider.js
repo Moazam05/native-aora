@@ -10,22 +10,24 @@ const GlobalProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCurrentUser()
-      .then((res) => {
+    const fetchCurrentUser = async () => {
+      try {
+        const res = await getCurrentUser();
         if (res) {
           setIsLogged(true);
           setUser(res);
         } else {
           setIsLogged(false);
-          setUser(false);
+          setUser(null);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
+      } catch (error) {
+        console.error("Error fetching current user:", error.message || error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCurrentUser();
   }, []);
 
   return (

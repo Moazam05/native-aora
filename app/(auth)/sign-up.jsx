@@ -42,8 +42,11 @@ const SignUp = () => {
         router.replace("/home");
       }
     } catch (error) {
-      console.log(error);
-      Alert.alert("Error", error.message);
+      console.error("SignUp Error:", error.message || error);
+      Alert.alert(
+        "Error",
+        "An error occurred during sign-up. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }

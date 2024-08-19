@@ -42,8 +42,11 @@ const SignIn = () => {
         router.replace("/home");
       }
     } catch (error) {
-      console.log(error);
-      Alert.alert("Error", error.message);
+      console.error("SignIn Error:", error.message || error);
+      Alert.alert(
+        "Error",
+        "An error occurred during sign-in. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
