@@ -1,13 +1,41 @@
-import { View, Text, FlatList, Image, RefreshControl } from "react-native";
-import React, { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  RefreshControl,
+  Alert,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../views/Home/components/Trending";
 import EmptyState from "../../components/EmptyState";
+import { getPosts } from "../../lib/appwrite";
 
 const Home = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await getPosts();
+
+        if (!response) throw new Error("No videos found");
+        setData(response);
+      } catch (error) {
+        Alert.alert("Error", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
