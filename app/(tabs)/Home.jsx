@@ -13,58 +13,26 @@ import SearchInput from "../../components/SearchInput";
 import Trending from "../../views/Home/components/Trending";
 import EmptyState from "../../components/EmptyState";
 import { getPosts } from "../../lib/appwrite";
+import useAppWrite from "../../lib/useAppWrite";
+import VideoCard from "../../views/Home/components/VideoCard";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: posts, isLoading, refetch } = useAppWrite(getPosts);
 
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await getPosts();
-
-        if (!response) throw new Error("No videos found");
-        setData(response);
-      } catch (error) {
-        Alert.alert("Error", error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchVideos();
-  }, []);
-
   const onRefresh = async () => {
     setRefreshing(true);
-
-    // re call videos -> if any videos are added
-
+    await refetch();
     setRefreshing(false);
   };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={[
-          {
-            id: 1,
-          },
-          {
-            id: 2,
-          },
-          {
-            id: 3,
-          },
-        ]}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Text className="text-3xl text-white">{item.id}</Text>
-          </View>
-        )}
+        data={posts}
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }) => <VideoCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">
