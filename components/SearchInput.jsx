@@ -4,9 +4,9 @@ import { router, usePathname } from "expo-router";
 
 import { icons } from "../constants";
 
-const SearchInput = ({ placeholder }) => {
+const SearchInput = ({ placeholder, initialQuery }) => {
   const pathName = usePathname();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery || "");
 
   return (
     <View className="border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-xl focus:border-secondary items-center flex-row space-x-4">
