@@ -2,6 +2,7 @@ import { View, Text, FlatList, Image } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
+import SearchInput from "../../components/SearchInput";
 
 const Home = () => {
   return (
@@ -46,6 +47,7 @@ const Home = () => {
             </View>
 
             {/* Search Bar */}
+            <SearchInput placeholder="Search latest videos..." />
           </View>
         )}
       />
