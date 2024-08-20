@@ -51,6 +51,9 @@ const TrendingItem = ({ item, activeItem }) => {
               setPlay(false);
             }
           }}
+          onLoadStart={() => console.log("Video is loading...")}
+          onLoad={() => console.log("Video loaded")}
+          onError={(error) => console.log("Video failed to load", error)}
         />
       ) : (
         <TouchableOpacity
