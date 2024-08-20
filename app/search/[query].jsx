@@ -11,7 +11,7 @@ import { searchPosts } from "../../lib/appwrite";
 
 const Search = () => {
   const { query } = useLocalSearchParams();
-  const { data: posts, refetch } = useAppWrite(searchPosts(query));
+  const { data: posts, refetch } = useAppWrite(() => searchPosts(query));
 
   useEffect(() => {
     if (query) refetch();
