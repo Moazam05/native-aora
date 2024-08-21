@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyState from "../../components/EmptyState";
 import useAppWrite from "../../lib/useAppWrite";
@@ -13,7 +13,11 @@ import { router } from "expo-router";
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
 
-  const { data: posts } = useAppWrite(() => getUserPosts(user.$id));
+  const { data: posts, refetch } = useAppWrite(() => getUserPosts(user.$id));
+
+  useEffect(() => {
+    if (user) refetch();
+  }, [user]);
 
   const logout = async () => {
     const response = await signOut();
