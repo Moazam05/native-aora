@@ -86,7 +86,7 @@ const SignUp = () => {
           />
 
           <CustomButton
-            title="Sign In"
+            title="Sign Up"
             handlePress={handleSignUp}
             containerStyles="mt-7"
             isLoading={isLoading}
