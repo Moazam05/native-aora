@@ -4,9 +4,9 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  Alert,
+  ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
@@ -23,6 +23,14 @@ const Home = () => {
   const { data: latestPosts } = useAppWrite(getLatestPosts);
 
   const [refreshing, setRefreshing] = useState(false);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView className="bg-primary h-full justify-center items-center">
+        <ActivityIndicator size="large" color="#ffffff" />
+      </SafeAreaView>
+    );
+  }
 
   const onRefresh = async () => {
     setRefreshing(true);
