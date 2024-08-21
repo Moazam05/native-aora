@@ -1,5 +1,4 @@
-import { useContext, createContext, useState, useEffect } from "react";
-import { getCurrentUser } from "../lib/appwrite";
+import { useContext, createContext, useState } from "react";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -9,27 +8,6 @@ const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const res = await getCurrentUser();
-        if (res) {
-          setIsLogged(true);
-          setUser(res);
-        } else {
-          setIsLogged(false);
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error fetching current user:", error.message || error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCurrentUser();
-  }, []);
-
   return (
     <GlobalContext.Provider
       value={{
@@ -38,6 +16,7 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
+        setLoading,
       }}
     >
       {children}
