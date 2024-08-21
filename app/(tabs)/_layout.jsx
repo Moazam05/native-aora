@@ -1,8 +1,11 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Platform } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 
 import { icons } from "../../constants";
+
+// Define height based on device
+const tabBarHeight = Platform.OS === "ios" ? 120 : 84;
 
 const TabIcon = ({ color, focused, icon, name }) => {
   return (
@@ -35,7 +38,7 @@ const TabsLayout = () => {
             backgroundColor: "#161622",
             borderTopWidth: 1,
             borderTopColor: "#232533",
-            height: 84,
+            height: tabBarHeight,
           },
         }}
       >
