@@ -15,6 +15,8 @@ const Create = () => {
   });
   const [uploading, setUploading] = useState(false);
 
+  const openPicker = async (selectType) => {};
+
   const submit = async () => {};
 
   return (
@@ -35,7 +37,7 @@ const Create = () => {
             Upload Video
           </Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openPicker("video")}>
             {form.video ? (
               <Video
                 source={{
@@ -65,7 +67,7 @@ const Create = () => {
             Thumbnail Image
           </Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openPicker("image")}>
             {form.thumbnail ? (
               <Image
                 source={{ uri: form.thumbnail.uri }}
