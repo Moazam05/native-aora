@@ -13,8 +13,13 @@ import { ResizeMode, Video } from "expo-av";
 import { icons } from "../../constants";
 import CustomButton from "../../components/CustomButton";
 import * as DocumentPicker from "expo-document-picker";
+import { router } from "expo-router";
+import { createVideo } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Create = () => {
+  const { user } = useGlobalContext();
+
   const [form, setForm] = useState({
     title: "",
     video: null,
@@ -45,7 +50,31 @@ const Create = () => {
     }
   };
 
-  const submit = async () => {};
+  const submit = async () => {
+    if (!form.title || !form.video || !form.thumbnail || !form.prompt) {
+      return Alert.alert("Error", "All fields are required");
+    }
+
+    setUploading(true);
+
+    try {
+      const result = await createVideo({ ...form, userId: user?.$id });
+      Alert.alert("Success", "Post uploaded successfully");
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "An error occurred while uploading video");
+    } finally {
+      setForm({
+        title: "",
+        video: null,
+        thumbnail: null,
+        prompt: "",
+      });
+
+      setUploading(false);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
