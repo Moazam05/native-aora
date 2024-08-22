@@ -1,4 +1,4 @@
-import { View, Text, Image, Platform } from "react-native";
+import { View, Text, Image, Platform, StatusBar } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 
@@ -90,6 +90,7 @@ const TabsLayout = () => {
           }}
         />
       </Tabs>
+      <StatusBar barStyle="light-content" />
     </>
   );
 };
