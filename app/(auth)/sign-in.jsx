@@ -12,7 +12,7 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
-import { getCurrentUser, signIn } from "../../lib/appwrite";
+import { getCurrentUserDetails, signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
@@ -34,7 +34,7 @@ const SignIn = () => {
 
     try {
       const result = await signIn(form.email, form.password);
-      const logInUser = await getCurrentUser(result?.userId);
+      const logInUser = await getCurrentUserDetails(result?.userId);
 
       if (logInUser) {
         setUser(logInUser);

@@ -1,5 +1,6 @@
-import { useContext, createContext, useState, useEffect } from "react";
-import { getCurrentUser } from "../lib/appwrite"; // Import function to fetch user
+import React, { createContext, useContext, useEffect, useState } from "react";
+
+import { getCurrentUser } from "../lib/appwrite";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -9,23 +10,23 @@ const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Automatically check if user is logged in on app load
   useEffect(() => {
-    const checkUserLoggedIn = async () => {
-      try {
-        const loggedInUser = await getCurrentUser(user?.accountId);
-        if (loggedInUser) {
+    getCurrentUser()
+      .then((res) => {
+        if (res) {
           setIsLogged(true);
-          setUser(loggedInUser);
+          setUser(res);
+        } else {
+          setIsLogged(false);
+          setUser(null);
         }
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      } finally {
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    checkUserLoggedIn();
+      });
   }, []);
 
   return (
@@ -36,7 +37,6 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
-        setLoading,
       }}
     >
       {children}
