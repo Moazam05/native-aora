@@ -33,7 +33,7 @@ const Create = () => {
       type:
         selectType === "image"
           ? ["image/png", "image/jpg", "image/jpeg"]
-          : ["video/mp4", "video/gif"],
+          : ["video/mp4", "video/gif", "video/mpeg"],
     });
 
     if (!result.canceled) {
@@ -43,10 +43,6 @@ const Create = () => {
       if (selectType === "video") {
         setForm({ ...form, video: result.assets[0] });
       }
-    } else {
-      setTimeout(() => {
-        Alert.alert("Document Picked", JSON.stringify(result, null, 2));
-      }, 100);
     }
   };
 
@@ -103,7 +99,7 @@ const Create = () => {
                 className="w-full h-64 rounded-2xl"
                 useNativeControls
                 resizeMode={ResizeMode.COVER}
-                isLooping
+                // isLooping
               />
             ) : (
               <View className="w-full h-40 px-4 bg-black-100 rounded-2xl justify-center items-center">
