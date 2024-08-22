@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import { ResizeMode, Video } from "expo-av";
 import { icons } from "../../constants";
 import CustomButton from "../../components/CustomButton";
+import * as DocumentPicker from "expo-document-picker";
 
 const Create = () => {
   const [form, setForm] = useState({
@@ -15,7 +23,27 @@ const Create = () => {
   });
   const [uploading, setUploading] = useState(false);
 
-  const openPicker = async (selectType) => {};
+  const openPicker = async (selectType) => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type:
+        selectType === "image"
+          ? ["image/png", "image/jpg", "image/jpeg"]
+          : ["video/mp4", "video/gif"],
+    });
+
+    if (!result.canceled) {
+      if (selectType === "image") {
+        setForm({ ...form, thumbnail: result.assets[0] });
+      }
+      if (selectType === "video") {
+        setForm({ ...form, video: result.assets[0] });
+      }
+    } else {
+      setTimeout(() => {
+        Alert.alert("Document Picked", JSON.stringify(result, null, 2));
+      }, 100);
+    }
+  };
 
   const submit = async () => {};
 
